@@ -3,7 +3,7 @@ import path, {dirname} from 'path'
 import { fileURLToPath } from 'url'
 
 //  Get All Grants
-export const getAll = async (req,res) => {
+export const getAllGrants = async (req,res) => {
     try {
         const grants = await Grant.find().sort('-createdAt')
         if(!grants){
@@ -20,7 +20,7 @@ export const getAll = async (req,res) => {
 export const createGrant = async (req,res) => {
     try {
         
-        const {url, nameSite, imgUrl, name, desc, financy, deadline} = req.body
+        const {url, nameSite, imgUrl, name, desc, financy, deadline, tags} = req.body
         const newGrant = new Grant({
             url,
             nameSite,
@@ -29,6 +29,7 @@ export const createGrant = async (req,res) => {
             desc,
             financy,
             deadline,
+            tags,
         })
         await newGrant.save()
         console.log('Send data from controller')
@@ -43,7 +44,7 @@ export const createGrant = async (req,res) => {
 export const removeGrants = async (req, res) =>{
     try {
         const grants = await Grant.deleteMany()
-        res.json({message: 'All grant has been deleted'})
+        res.json({message: 'All grants has been deleted'})
     } catch (error) {
         res.json({message: 'Something went wrong'})
     }

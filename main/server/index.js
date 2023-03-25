@@ -5,7 +5,11 @@ import cors from "cors"
 import cron from "node-cron"
 import fileUpload from "express-fileupload"
 import grantRoute from './routes/grants.js'
+import productRoute from './routes/product.js'
+import userRoute from './routes/users.js'
 import { mainFunc } from "./parse/parse.js"
+import errorMiddleware from './middleware/error.js'
+import cookieParser from "cookie-parser"
 
 const app = express()
 dotenv.config()
@@ -22,25 +26,35 @@ app.use(cors())
 app.use(fileUpload())
 app.use(express.json())
 app.use(express.static('uploads'))
+app.use(errorMiddleware)
+app.use(cookieParser())
 
 
 //  Routes
-// http://localhost:3001
+// http://localhost:3001/api/grants
 app.use('/api/grants', grantRoute)
+
+// http://localhost:3001/api/product
+app.use('/api/product', productRoute)
+
+// http://localhost:3001/api/user
+app.use('/api/user', userRoute)
 
 
 async function start(){
     try {
         await mongoose.connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@${DB_CLUSTER}.idnbxaz.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`)
-        
+        console.log('Server connected with DataBase!')
         app.listen(PORT, () =>{
             console.log(`server started on port ${PORT}`)
         })
 
-        cron.schedule('0 0 */7 * *', () => {
-            mainFunc()
-            console.log('For check execute cron every 1 minute')
-        })
+        //mainFunc()
+
+        // cron.schedule('0 0 */7 * *', () => {
+        //     mainFunc()
+        //     console.log('For check execute cron every 1 minute')
+        // })
     } catch (error) {
         console.log(error)
     }

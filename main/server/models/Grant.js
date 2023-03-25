@@ -9,6 +9,7 @@ const GrantSchema = new mongoose.Schema(
         desc:{type:String, },
         financy:{type:String, default:"Финансирование отсутствует."},
         deadline:{type:String, default:"Сроки не известны"},
+        tags : {type: Array},
     },
     {
         timestamps: true

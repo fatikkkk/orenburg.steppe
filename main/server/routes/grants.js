@@ -1,19 +1,18 @@
 import {Router} from 'express'
-import {createGrant, getAll, removeGrants } from '../controllers/grants.js'
-// import {getParse } from '../controllers/grants.js'
+import {createGrant, getAllGrants, removeGrants } from '../controllers/grants.js'
 
 const router = new Router()
 
 //  Get all grant
 //  http://localhost:3001/api/grants
-router.get('/', getAll)
+router.get('/', getAllGrants)
 
 //  Create grant
 //  http://localhost:3001/api/grants/createGrant
 router.post('/createGrant', createGrant)
 
 //  Delete all grants
-//  http://localhost:3001/api/grants
+//  http://localhost:3001/api/grants/removeGrants
 router.delete('/removeGrants', removeGrants)
 
 

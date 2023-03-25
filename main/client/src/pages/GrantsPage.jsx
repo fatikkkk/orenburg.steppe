@@ -21,10 +21,10 @@ export const GrantsPage = () => {
     }
 
     return (
-        <div className='max-w-[600px] mx-auto py-10'>
+        <div className='mx-auto py-10'>
             <p className='text-[#009900] text-3xl font-bold pb-4'>Actual Grants</p>
-            <div className='flex justify-between gap-8'>
-                <div className='flex flex-col gap-10 items-center'>
+            <div className='gap-8'>
+                <div className='gap-10 flex flex-wrap justify-between'>
                     {grants?.map((grant, idx) => (
                         <GrantItem key={idx} grant={grant} />
                     ))}
