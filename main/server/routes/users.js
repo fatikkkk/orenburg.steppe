@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { loginUser, registerUser, logoutUser, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile } from '../controllers/users.js'
+import { loginUser, registerUser, logoutUser, forgotPassword, resetPassword, getUserDetails, updatePassword, updateProfile, getAllUsers, getSingleUser, deleteUser, updateRole } from '../controllers/users.js'
 import { isAutheticantedUser, authorizeRoles } from '../middleware/auth.js'
 
 const router = new Router()
@@ -36,6 +36,22 @@ router.put('/password/update', isAutheticantedUser, updatePassword)
 //  Update Profile
 //  http://localhost:3001/api/user/me/update
 router.put('/me/update', isAutheticantedUser, updateProfile)
+
+//  Get All Users   -   Admin
+//  http://localhost:3001/api/user/users
+router.get('/users', isAutheticantedUser, authorizeRoles('admin'), getAllUsers)
+
+//  Get Single User   -   Admin
+//  http://localhost:3001/api/user/:id
+router.get('/:id', isAutheticantedUser, authorizeRoles('admin'), getSingleUser)
+
+//  Update User Role
+//  http://localhost:3001/api/user/:id
+router.put('/:id', isAutheticantedUser, authorizeRoles('admin'), updateRole)
+
+//  Delete User
+//  http://localhost:3001/api/user/:id
+router.delete('/:id', isAutheticantedUser, authorizeRoles('admin'), deleteUser)
 
 
 export default router

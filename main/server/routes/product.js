@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createProduct, getAllProducts, updateProduct, removeProduct, getProductDetails } from '../controllers/product.js'
+import { createProduct, getAllProducts, updateProduct, removeProduct, getProductDetails, createProductRevies } from '../controllers/product.js'
 import { isAutheticantedUser, authorizeRoles } from '../middleware/auth.js'
 
 const router = new Router()
@@ -23,6 +23,10 @@ router.put('/updateProduct/:id', isAutheticantedUser, authorizeRoles('admin'), u
 //  Delete product
 //  http://localhost:3001/api/product/removeProduct/:id
 router.delete('/removeProduct/:id', isAutheticantedUser, authorizeRoles('admin'), removeProduct)
+
+//  Review
+//  http://localhost:3001/api/product/review
+router.delete('/review', isAutheticantedUser, authorizeRoles('admin'), createProductRevies)
 
 
 
